@@ -1,10 +1,17 @@
+import { Link, useLocation } from "react-router-dom";
+
 function Navigation() {
+  const location = useLocation();
+
   return (
     <nav className="navbar">
       <div className="container">
-        <a href="#home" className="logo">
+        <Link to="/" className="logo">
           Ippeba<span>Connect</span>
-        </a>
+        </Link>
+        {/* <a href="#home" className="logo">
+          Ippeba<span>Connect</span>
+        </a> */}
         <div className="nav-links">
           <a href="#about">About</a>
           <a href="#projects">Projects</a>
