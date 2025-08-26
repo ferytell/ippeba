@@ -9,7 +9,6 @@ import Contact from "./page/landing/Contact";
 import Footer from "./page/landing/Footer";
 import UsahaEkonomiMesjid from "./page/projects/uem/UsahaEkonomiMesjid";
 import Login from "./components/Login";
-import AuthWrapper from "./components/AuthWrapper";
 import "./App.css";
 
 // Layout component
