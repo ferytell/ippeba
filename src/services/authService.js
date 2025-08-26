@@ -19,7 +19,7 @@ export const authService = {
       });
       //console.log("isAuthenticated response:", response);
 
-      return response.status == 200 ? true : false;
+      return response.status === 200 ? true : false;
     } catch (error) {
       return false;
     }

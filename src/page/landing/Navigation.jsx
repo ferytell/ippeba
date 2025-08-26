@@ -1,8 +1,6 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function Navigation() {
-  const location = useLocation();
-
   return (
     <nav className="navbar">
       <div className="container">
