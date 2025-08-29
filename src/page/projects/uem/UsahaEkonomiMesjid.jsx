@@ -14,7 +14,7 @@ function UsahaEkonomiMesjid({ isAuthenticated = false }) {
     const fetchVillagers = async () => {
       try {
         const response = await villagersService.getVillagers();
-        setVillagers(response.data); // Assuming response.data contains the villagers array
+        setVillagers(response.data); // response.data contains the villagers array
         setLoading(false);
       } catch (err) {
         setError("Failed to fetch villagers data.");
@@ -25,10 +25,41 @@ function UsahaEkonomiMesjid({ isAuthenticated = false }) {
     fetchVillagers();
   }, []); // Empty dependency array means this runs once on mount
 
+  // Handle adding new data
+  const handleAdd = async (newData) => {
+    try {
+      const newVillager = {
+        ...newData,
+        id: villagers.length ? Math.max(...villagers.map((v) => v.id)) + 1 : 1, // Simple ID generation
+      };
+      // Optionally, send to backend
+      await villagersService.createVillager(newVillager);
+      setVillagers([...villagers, newVillager]);
+    } catch (err) {
+      setError("Failed to add villager.");
+    }
+  };
+
+  // Handle editing existing data
+  const handleEdit = async (id, updatedData) => {
+    try {
+      const updatedVillager = { ...updatedData, id };
+      // Optionally, send to backend
+      await villagersService.updateVillager(id, updatedVillager);
+      setVillagers(
+        villagers.map((villager) =>
+          villager.id === id ? updatedVillager : villager
+        )
+      );
+    } catch (err) {
+      setError("Failed to update villager.");
+    }
+  };
+
   const columns = [
-    { key: "id", label: "ID" },
+    { key: "ID", label: "ID" },
     { key: "name", label: "Name" },
-    { key: "someField", label: "Other Field" }, // Adjust based on your data
+    { key: "neighborhood_id", label: "RT" }, // Adjust based on your data
   ];
 
   return (
@@ -51,7 +82,12 @@ function UsahaEkonomiMesjid({ isAuthenticated = false }) {
         ) : error ? (
           <p>{error}</p>
         ) : (
-          <Table data={villagers} columns={columns} />
+          <Table
+            data={villagers}
+            columns={columns}
+            onAdd={handleAdd}
+            onEdit={handleEdit}
+          />
         )}
       </div>
       <p>Ini adalah halaman detail tentang Usaha Ekonomi Mesjid.</p>
