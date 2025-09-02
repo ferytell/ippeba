@@ -15,6 +15,7 @@ function UsahaEkonomiMesjid({ isAuthenticated = false }) {
       try {
         const response = await villagersService.getVillagers();
         setVillagers(response.data); // response.data contains the villagers array
+        console.log("Fetched villagers:", response.data);
         setLoading(false);
       } catch (err) {
         setError("Failed to fetch villagers data.");
@@ -28,11 +29,12 @@ function UsahaEkonomiMesjid({ isAuthenticated = false }) {
   // Handle adding new data
   const handleAdd = async (newData) => {
     try {
+      console.log("data passed", newData);
       const newVillager = {
         ...newData,
-        id: villagers.length ? Math.max(...villagers.map((v) => v.id)) + 1 : 1, // Simple ID generation
+        ID: villagers.length ? Math.max(...villagers.map((v) => v.ID)) + 1 : 1, // Simple ID generation
       };
-      // Optionally, send to backend
+      // Send to backend
       await villagersService.createVillager(newVillager);
       setVillagers([...villagers, newVillager]);
     } catch (err) {
@@ -41,14 +43,14 @@ function UsahaEkonomiMesjid({ isAuthenticated = false }) {
   };
 
   // Handle editing existing data
-  const handleEdit = async (id, updatedData) => {
+  const handleEdit = async (ID, updatedData) => {
     try {
-      const updatedVillager = { ...updatedData, id };
-      // Optionally, send to backend
-      await villagersService.updateVillager(id, updatedVillager);
+      const updatedVillager = { ...updatedData, ID };
+      // Send to backend
+      await villagersService.updateVillager(ID, updatedVillager);
       setVillagers(
         villagers.map((villager) =>
-          villager.id === id ? updatedVillager : villager
+          villager.ID === ID ? updatedVillager : villager
         )
       );
     } catch (err) {
@@ -57,16 +59,24 @@ function UsahaEkonomiMesjid({ isAuthenticated = false }) {
   };
 
   const columns = [
-    { key: "ID", label: "ID" },
-    { key: "name", label: "Name" },
-    { key: "neighborhood_id", label: "RT" }, // Adjust based on your data
+    { key: "ID", label: "ID" }, // First column, uneditable (handled by Table component)
+    { key: "name", label: "Name" }, // Regular text input
+    {
+      key: "neighborhood_id",
+      label: "RT",
+      type: "dropdown",
+      options: [
+        { value: "01", label: "01" },
+        { value: "02", label: "02" },
+        { value: "03", label: "03" },
+      ],
+    }, // Dropdown for neighborhood_id
   ];
 
   return (
     <div className="page-container">
       <div className="header">
         <h1>Usaha Ekonomi Mesjid</h1>
-
         {!isAuthenticated ? (
           <Link to="/login" className="btn-primary">
             Login as Admin
@@ -87,6 +97,7 @@ function UsahaEkonomiMesjid({ isAuthenticated = false }) {
             columns={columns}
             onAdd={handleAdd}
             onEdit={handleEdit}
+            isAdmin={isAuthenticated}
           />
         )}
       </div>

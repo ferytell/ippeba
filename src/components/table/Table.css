@@ -36,6 +36,19 @@
   box-sizing: border-box;
 }
 
+.custom-table input,
+.custom-table .dropdown {
+  width: 100%;
+  padding: 5px;
+  box-sizing: border-box;
+}
+
+.custom-table .dropdown {
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
 .custom-table button {
   margin-right: 5px;
   padding: 5px 10px;
