@@ -41,7 +41,7 @@ function Table({ data, columns, onAdd, onEdit, isAdmin = false }) {
   };
 
   // Get the key of the first column to make it uneditable
-  const firstColumnKey = columns[0]?.key;
+  // const firstColumnKey = columns[0]?.key;
 
   return (
     <div className="table-container">
