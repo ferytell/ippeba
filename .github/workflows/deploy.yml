@@ -6,7 +6,7 @@ on:
 
 jobs:
   deploy:
-    runs-on: self-hosted # This runs directly on your Ubuntu server!
+    runs-on: [self-hosted, Linux, X64] # Add specific labels
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
