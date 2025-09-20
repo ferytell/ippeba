@@ -27,7 +27,8 @@ jobs:
       - name: Create production server files
         run: |
           # Create server.js
-          echo 'const express = require("express");
+          cat > server.js << 'EOF'
+          const express = require("express");
           const path = require("path");
           const app = express();
           const port = process.env.PORT || 3000;
@@ -40,10 +41,12 @@ jobs:
 
           app.listen(port, () => {
             console.log(`React app server running on port ${port}`);
-          });' > server.js
+          });
+          EOF
 
           # Create package.json for production
-          echo '{
+          cat > package-production.json << 'EOF'
+          {
             "name": "react-app-server",
             "version": "1.0.0",
             "description": "Simple server for React app",
@@ -54,15 +57,31 @@ jobs:
             "dependencies": {
               "express": "^4.18.2"
             }
-          }' > package-production.json
+          }
+          EOF
 
       - name: Install express
         run: npm install express --save
 
-      - name: Create systemd service file
+      - name: Deploy files to app directory
         run: |
-          # Create the service file as regular user first
-          cat > react-app.service << 'EOF'
+          mkdir -p /home/ferytell/react-app
+          cp -r build/* /home/ferytell/react-app/
+          cp server.js /home/ferytell/react-app/
+          cp package-production.json /home/ferytell/react-app/package.json
+
+          # Set correct ownership
+          chown -R ferytell:ferytell /home/ferytell/react-app
+
+      - name: Install production dependencies
+        run: |
+          cd /home/ferytell/react-app
+          npm install --production
+
+      - name: Create systemd service without sudo
+        run: |
+          # Create the service file in a temporary location
+          cat > /tmp/react-app.service << 'EOF'
           [Unit]
           Description=React App Server
           After=network.target
@@ -80,24 +99,11 @@ jobs:
           WantedBy=multi-user.target
           EOF
 
-          # Then copy it with sudo
-          sudo cp react-app.service /etc/systemd/system/
+      - name: Copy service file using elevated script
+        run: |
+          # Use a helper script that has setuid or proper permissions
+          sudo /bin/cp /tmp/react-app.service /etc/systemd/system/
           sudo chmod 644 /etc/systemd/system/react-app.service
-
-      - name: Deploy files to app directory
-        run: |
-          mkdir -p /home/ferytell/react-app
-          cp -r build/* /home/ferytell/react-app/
-          cp server.js /home/ferytell/react-app/
-          cp package-production.json /home/ferytell/react-app/package.json
-
-          # Set correct ownership
-          sudo chown -R ferytell:ferytell /home/ferytell/react-app
-
-      - name: Install production dependencies
-        run: |
-          cd /home/ferytell/react-app
-          npm install --production
 
       - name: Setup and start service
         run: |
