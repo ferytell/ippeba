@@ -61,7 +61,8 @@ jobs:
 
       - name: Create systemd service file
         run: |
-          sudo tee /etc/systemd/system/react-app.service > /dev/null << 'EOF'
+          # Create the service file as regular user first
+          cat > react-app.service << 'EOF'
           [Unit]
           Description=React App Server
           After=network.target
@@ -78,6 +79,10 @@ jobs:
           [Install]
           WantedBy=multi-user.target
           EOF
+
+          # Then copy it with sudo
+          sudo cp react-app.service /etc/systemd/system/
+          sudo chmod 644 /etc/systemd/system/react-app.service
 
       - name: Deploy files to app directory
         run: |
