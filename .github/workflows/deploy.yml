@@ -6,7 +6,8 @@ on:
 
 jobs:
   deploy:
-    runs-on: [self-hosted, Linux, X64] # Add specific labels
+    # Use the exact labels from your runner configuration
+    runs-on: [self-hosted, Linux, X64] # These are the default labels
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -56,7 +57,7 @@ jobs:
           }' > package-production.json
 
       - name: Install production dependencies
-        run: npm install --production --prefix ./ --package-lock=false
+        run: npm install express --save
 
       - name: Setup systemd service for React app
         run: |
@@ -65,7 +66,7 @@ jobs:
           After=network.target
 
           [Service]
-          ExecStart=/usr/bin/npm start
+          ExecStart=/usr/bin/node /home/ferytell/react-app/server.js
           WorkingDirectory=/home/ferytell/react-app
           User=ferytell
           Group=ferytell
@@ -76,8 +77,20 @@ jobs:
           [Install]
           WantedBy=multi-user.target" | sudo tee /etc/systemd/system/react-app.service
 
-      - name: Restart React app service
+      - name: Deploy React app files
         run: |
+          # Create target directory
+          mkdir -p /home/ferytell/react-app
+
+          # Copy built files and server
+          cp -r build/* /home/ferytell/react-app/
+          cp server.js /home/ferytell/react-app/
+          cp package-production.json /home/ferytell/react-app/package.json
+
+      - name: Install production deps and restart service
+        run: |
+          cd /home/ferytell/react-app
+          npm install
           sudo systemctl daemon-reload
           sudo systemctl enable react-app
           sudo systemctl restart react-app
