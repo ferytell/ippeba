@@ -6,8 +6,7 @@ on:
 
 jobs:
   deploy:
-    # Use the exact labels from your runner configuration
-    runs-on: [self-hosted, Linux, X64] # These are the default labels
+    runs-on: [self-hosted, Linux, X64]
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -25,24 +24,25 @@ jobs:
         env:
           REACT_APP_API_BASE_URL: ${{ secrets.REACT_APP_API_BASE_URL }}
 
-      - name: Create production server
+      - name: Create production server files
         run: |
-          # Create a simple Node.js server for the React app
+          # Create server.js
           echo 'const express = require("express");
           const path = require("path");
           const app = express();
           const port = process.env.PORT || 3000;
 
-          app.use(express.static(path.join(__dirname, "build")));
+          app.use(express.static(path.join(__dirname)));
 
           app.get("*", (req, res) => {
-            res.sendFile(path.join(__dirname, "build", "index.html"));
+            res.sendFile(path.join(__dirname, "index.html"));
           });
 
           app.listen(port, () => {
             console.log(`React app server running on port ${port}`);
           });' > server.js
 
+          # Create package.json for production
           echo '{
             "name": "react-app-server",
             "version": "1.0.0",
@@ -56,12 +56,13 @@ jobs:
             }
           }' > package-production.json
 
-      - name: Install production dependencies
+      - name: Install express
         run: npm install express --save
 
-      - name: Setup systemd service for React app
+      - name: Create systemd service file
         run: |
-          echo "[Unit]
+          sudo tee /etc/systemd/system/react-app.service > /dev/null << 'EOF'
+          [Unit]
           Description=React App Server
           After=network.target
 
@@ -75,25 +76,30 @@ jobs:
           Environment=PORT=3000
 
           [Install]
-          WantedBy=multi-user.target" | sudo tee /etc/systemd/system/react-app.service
+          WantedBy=multi-user.target
+          EOF
 
-      - name: Deploy React app files
+      - name: Deploy files to app directory
         run: |
-          # Create target directory
           mkdir -p /home/ferytell/react-app
-
-          # Copy built files and server
           cp -r build/* /home/ferytell/react-app/
           cp server.js /home/ferytell/react-app/
           cp package-production.json /home/ferytell/react-app/package.json
 
-      - name: Install production deps and restart service
+          # Set correct ownership
+          sudo chown -R ferytell:ferytell /home/ferytell/react-app
+
+      - name: Install production dependencies
         run: |
           cd /home/ferytell/react-app
-          npm install
+          npm install --production
+
+      - name: Setup and start service
+        run: |
           sudo systemctl daemon-reload
           sudo systemctl enable react-app
           sudo systemctl restart react-app
+          echo "Service status:"
           sudo systemctl status react-app --no-pager -l
 
 #jekyll-gh-pages.yml
