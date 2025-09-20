@@ -44,8 +44,17 @@ jobs:
           });
           EOF
 
-          # Create package.json for production
-          cat > package-production.json << 'EOF'
+      - name: Install express
+        run: npm install express --save
+
+      - name: Deploy files to app directory
+        run: |
+          mkdir -p /home/ferytell/react-app
+          cp -r build/* /home/ferytell/react-app/
+          cp server.js /home/ferytell/react-app/
+
+          # Create package.json for the app
+          cat > /home/ferytell/react-app/package.json << 'EOF'
           {
             "name": "react-app-server",
             "version": "1.0.0",
@@ -60,58 +69,57 @@ jobs:
           }
           EOF
 
-      - name: Install express
-        run: npm install express --save
-
-      - name: Deploy files to app directory
-        run: |
-          mkdir -p /home/ferytell/react-app
-          cp -r build/* /home/ferytell/react-app/
-          cp server.js /home/ferytell/react-app/
-          cp package-production.json /home/ferytell/react-app/package.json
-
-          # Set correct ownership
-          chown -R ferytell:ferytell /home/ferytell/react-app
-
       - name: Install production dependencies
         run: |
           cd /home/ferytell/react-app
           npm install --production
 
-      - name: Create systemd service without sudo
+      - name: Setup PM2 for process management
         run: |
-          # Create the service file in a temporary location
-          cat > /tmp/react-app.service << 'EOF'
-          [Unit]
-          Description=React App Server
-          After=network.target
+          # Install PM2 globally
+          npm install -g pm2
 
-          [Service]
-          ExecStart=/usr/bin/node /home/ferytell/react-app/server.js
-          WorkingDirectory=/home/ferytell/react-app
-          User=ferytell
-          Group=ferytell
-          Restart=always
-          Environment=NODE_ENV=production
-          Environment=PORT=3000
-
-          [Install]
-          WantedBy=multi-user.target
+          # Create PM2 ecosystem file
+          cat > /home/ferytell/react-app/ecosystem.config.js << 'EOF'
+          module.exports = {
+            apps: [{
+              name: "react-app",
+              script: "./server.js",
+              instances: 1,
+              autorestart: true,
+              watch: false,
+              max_memory_restart: "1G",
+              env: {
+                NODE_ENV: "production",
+                PORT: 3000
+              }
+            }]
+          }
           EOF
 
-      - name: Copy service file using elevated script
+      - name: Start application with PM2
         run: |
-          # Use a helper script that has setuid or proper permissions
-          sudo /bin/cp /tmp/react-app.service /etc/systemd/system/
-          sudo chmod 644 /etc/systemd/system/react-app.service
+          cd /home/ferytell/react-app
 
-      - name: Setup and start service
-        run: |
-          sudo systemctl daemon-reload
-          sudo systemctl enable react-app
-          sudo systemctl restart react-app
-          echo "Service status:"
-          sudo systemctl status react-app --no-pager -l
+          # Stop existing instance if running
+          pm2 delete react-app 2>/dev/null || true
+
+          # Start new instance
+          pm2 start ecosystem.config.js
+
+          # Save PM2 process list
+          pm2 save
+
+          # Setup startup script (only need to do this once)
+          if ! pm2 startup 2>/dev/null; then
+            echo "PM2 startup already configured"
+          fi
+
+          # List running processes
+          pm2 list
+
+          echo "React app deployed successfully!"
+          echo "App should be available at: http://localhost:3000"
 
 #jekyll-gh-pages.yml
 # name: Deploy React App to GitHub Pages
