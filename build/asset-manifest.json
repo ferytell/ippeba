@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/ippeba/static/css/main.0ccf5a08.css",
-    "main.js": "/ippeba/static/js/main.762b15b2.js",
-    "static/js/453.d7f84043.chunk.js": "/ippeba/static/js/453.d7f84043.chunk.js",
+    "main.css": "/ippeba/static/css/main.b5ef2e49.css",
+    "main.js": "/ippeba/static/js/main.77e3d087.js",
+    "static/js/453.4e515f85.chunk.js": "/ippeba/static/js/453.4e515f85.chunk.js",
     "static/media/IPPEBA.png": "/ippeba/static/media/IPPEBA.70937dd6a3a7ccbacacc.png",
     "index.html": "/ippeba/index.html",
-    "main.0ccf5a08.css.map": "/ippeba/static/css/main.0ccf5a08.css.map",
-    "main.762b15b2.js.map": "/ippeba/static/js/main.762b15b2.js.map",
-    "453.d7f84043.chunk.js.map": "/ippeba/static/js/453.d7f84043.chunk.js.map"
+    "main.b5ef2e49.css.map": "/ippeba/static/css/main.b5ef2e49.css.map",
+    "main.77e3d087.js.map": "/ippeba/static/js/main.77e3d087.js.map",
+    "453.4e515f85.chunk.js.map": "/ippeba/static/js/453.4e515f85.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.0ccf5a08.css",
-    "static/js/main.762b15b2.js"
+    "static/css/main.b5ef2e49.css",
+    "static/js/main.77e3d087.js"
   ]
 }
