@@ -2,7 +2,14 @@ import { useState } from "react";
 import Dropdown from "../dropdown/Dropdown";
 import "./Table.css";
 
-function Table({ data, columns, onAdd, onEdit, isAdmin = false }) {
+function Table({
+  data,
+  columns,
+  onAdd,
+  onEdit,
+  isAdmin = false,
+  isLoading = false,
+}) {
   const [isAdding, setIsAdding] = useState(false);
   const [addFormData, setAddFormData] = useState({});
   const [editingId, setEditingId] = useState(null);
@@ -56,7 +63,16 @@ function Table({ data, columns, onAdd, onEdit, isAdmin = false }) {
           </tr>
         </thead>
         <tbody>
-          {data.length > 0 ? (
+          {isLoading ? ( // Loading state
+            <tr>
+              <td
+                colSpan={columns.length + (isAdmin ? 1 : 0)}
+                className="loading-cell"
+              >
+                <div className="loading-spinner">Loading...</div>
+              </td>
+            </tr>
+          ) : data.length > 0 ? (
             data.map((item) => (
               <tr key={item.ID}>
                 {editingId === item.ID && isAdmin ? ( // Edit mode only for admins
@@ -148,7 +164,8 @@ function Table({ data, columns, onAdd, onEdit, isAdmin = false }) {
         </tbody>
       </table>
       {isAdmin &&
-        !isAdding && ( // Add button only for admins
+        !isAdding &&
+        !isLoading && ( // Hide add button when loading
           <button className="add-button" onClick={() => setIsAdding(true)}>
             +
           </button>

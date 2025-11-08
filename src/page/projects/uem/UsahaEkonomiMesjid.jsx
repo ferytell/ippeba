@@ -87,9 +87,7 @@ function UsahaEkonomiMesjid({ isAuthenticated = false }) {
       </div>
 
       <div className="report">
-        {loading ? (
-          <p>Loading...</p>
-        ) : error ? (
+        {error ? (
           <p>{error}</p>
         ) : (
           <Table
@@ -98,6 +96,7 @@ function UsahaEkonomiMesjid({ isAuthenticated = false }) {
             onAdd={handleAdd}
             onEdit={handleEdit}
             isAdmin={isAuthenticated}
+            isLoading={loading} // ← Add this line
           />
         )}
       </div>
