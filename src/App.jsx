@@ -43,7 +43,7 @@ function App() {
   };
 
   return (
-    <Router basename="/ippeba">
+    <Router basename="/">
       <Routes>
         <Route
           path="/"
