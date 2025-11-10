@@ -17,13 +17,15 @@ jobs:
           node-version: "20"
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
       - name: Debug Environment
         run: |
           echo "=== ENVIRONMENT DEBUG INFO ==="
           echo "REACT_APP_API_BASE_URL: $REACT_APP_API_BASE_URL"
+          echo "Secret exists: ${{ secrets.REACT_APP_API_BASE_URL != '' }}"
           echo "Node version: $(node --version)"
+          echo "NPM version: $(npm --version)"
           echo "=============================="
         env:
           REACT_APP_API_BASE_URL: ${{ secrets.REACT_APP_API_BASE_URL }}
@@ -34,7 +36,7 @@ jobs:
           npm run build
         # Remove env here — .env.production will be used automatically!
 
-      - name: Deploy to server
+      - name: Deploy build to server
         run: |
           sudo rm -rf /var/www/*
           sudo mkdir -p /var/www
