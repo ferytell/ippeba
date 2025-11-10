@@ -58,7 +58,7 @@ function Table({
             {columns.map((column) => (
               <th key={column.key}>{column.label}</th>
             ))}
-            {isAdmin && <th>Actions</th>}{" "}
+            {isAdmin && <th>Actions</th>}
             {/* Show Actions column only for admins */}
           </tr>
         </thead>
