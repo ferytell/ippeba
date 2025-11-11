@@ -10,6 +10,11 @@ const api = axios.create({
   },
 });
 
+api.interceptors.request.use((config) => {
+  config.headers["Origin"] = window.location.origin; // Force Origin
+  return config;
+});
+
 api.interceptors.response.use(
   (response) => response,
   (error) => {

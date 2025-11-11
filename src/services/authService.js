@@ -3,6 +3,8 @@ import { apiService } from "./api";
 export const authService = {
   login: async (credentials) => {
     const response = await apiService.post("/api/login", credentials);
+    console.log("REACT_APP_API_BASE_URL", process.env.REACT_APP_API_BASE_URL);
+
     return response.data;
   },
 
