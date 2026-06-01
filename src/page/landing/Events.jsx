@@ -29,6 +29,17 @@ function Events() {
               <button className="btn-secondary">RSVP</button>
             </div>
           </div>
+          <div className="event-card">
+            <div className="event-date">
+              <span className="day">22</span>
+              <span className="month">June</span>
+            </div>
+            <div className="event-details">
+              <h3>Pasar Rakyat</h3>
+              <p>yeah Fun.</p>
+              <button className="btn-secondary">UEM</button>
+            </div>
+          </div>
         </div>
       </div>
     </section>
