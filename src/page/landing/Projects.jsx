@@ -20,7 +20,7 @@ function Projects() {
         <div className="project-cards">
           <div className="project-card">
             <img
-              src="https://via.placeholder.com/400x250?text=Clean+Water"
+              src="https://minio-api.ferytell.site/public-buck/clean_water.png"
               alt="Clean Water Project"
             />
             <div className="project-info">
@@ -38,7 +38,7 @@ function Projects() {
           </div>
           <div className="project-card">
             <img
-              src="https://minio.ferytell.site/api/v1/download-shared-object/aHR0cDovL21pbmlvLWFwaS5mZXJ5dGVsbC5zaXRlL3B1YmxpYy1idWNrL2NsZWFuX3dhdGVyLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUVTOEY0QjRQRVFWUVZFM1hWWEdUJTJGMjAyNTExMTElMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUxMTExVDE4NTE1MVomWC1BbXotRXhwaXJlcz00MzIwMCZYLUFtei1TZWN1cml0eS1Ub2tlbj1leUpoYkdjaU9pSklVelV4TWlJc0luUjVjQ0k2SWtwWFZDSjkuZXlKaFkyTmxjM05MWlhraU9pSkZVemhHTkVJMFVFVlJWbEZXUlROWVZsaEhWQ0lzSW1WNGNDSTZNVGMyTWpreU9Ea3dNU3dpY0dGeVpXNTBJam9pYldsdWFXOWhaRzFwYmlKOS5KRkc4bDA1bFVFVk1QRm1ycmUwWF9uT3huOWZ3T19SQVR0OGU0cjFJY1BSckFpVzRRc2pvWGw0bW5BYjdVS2NDWklHZGhjWk15Z1Fhdkh5XzZpalJOZyZYLUFtei1TaWduZWRIZWFkZXJzPWhvc3QmdmVyc2lvbklkPW51bGwmWC1BbXotU2lnbmF0dXJlPWQ0MTUzZWZlZTU2ZTA5MzU5NmMzNmQ1NDllNTQwMjUxNzZjN2YyNGRkYWE3NzU3MDE2MGNkNDg1N2IzYTA4Njg"
+              src="https://minio-api.ferytell.site/public-buck/nice.jpg"
               alt="17 an"
             />
             <div className="project-info">
@@ -53,7 +53,7 @@ function Projects() {
           </div>
           <div className="project-card">
             <img
-              src="https://minio.ferytell.site/api/v1/download-shared-object/aHR0cDovL21pbmlvLWFwaS5mZXJ5dGVsbC5zaXRlL3B1YmxpYy1idWNrL2VkdWNhdGlvbi5wbmc_WC1BbXotQWxnb3JpdGhtPUFXUzQtSE1BQy1TSEEyNTYmWC1BbXotQ3JlZGVudGlhbD1FUzhGNEI0UEVRVlFWRTNYVlhHVCUyRjIwMjUxMTExJTJGdXMtZWFzdC0xJTJGczMlMkZhd3M0X3JlcXVlc3QmWC1BbXotRGF0ZT0yMDI1MTExMVQxODUxMjhaJlgtQW16LUV4cGlyZXM9NDMxOTkmWC1BbXotU2VjdXJpdHktVG9rZW49ZXlKaGJHY2lPaUpJVXpVeE1pSXNJblI1Y0NJNklrcFhWQ0o5LmV5SmhZMk5sYzNOTFpYa2lPaUpGVXpoR05FSTBVRVZSVmxGV1JUTllWbGhIVkNJc0ltVjRjQ0k2TVRjMk1qa3lPRGt3TVN3aWNHRnlaVzUwSWpvaWJXbHVhVzloWkcxcGJpSjkuSkZHOGwwNWxVRVZNUEZtcnJlMFhfbk94bjlmd09fUkFUdDhlNHIxSWNQUnJBaVc0UXNqb1hsNG1uQWI3VUtjQ1pJR2RoY1pNeWdRYXZIeV82aWpSTmcmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0JnZlcnNpb25JZD1udWxsJlgtQW16LVNpZ25hdHVyZT1kZWJhYmMxZmNiZDQ5YzY0NzkyYTRhMmQwNWNjOTZiMmM3Y2JjMzNjYWQ2YTIwNjA1YmEyYTgyYWQ5N2MzNThi"
+              src="https://minio-api.ferytell.site/public-buck/education.png"
               alt="UEM"
             />
             <div className="project-info">

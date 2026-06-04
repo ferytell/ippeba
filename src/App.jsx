@@ -1,5 +1,10 @@
 import { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { ThemeProvider } from "@mui/material/styles";
+import { Provider as JotaiProvider } from "jotai";
+
+import CssBaseline from "@mui/material/CssBaseline";
+import theme from "./theme"; // Your custom theme
 import Navigation from "./page/landing/Navigation";
 import Hero from "./page/landing/Hero";
 import About from "./page/landing/About";
@@ -9,20 +14,24 @@ import Contact from "./page/landing/Contact";
 import Footer from "./page/landing/Footer";
 import UsahaEkonomiMesjid from "./page/projects/uem/UsahaEkonomiMesjid";
 import Login from "./components/Login";
-import "./App.css";
+import "./App.css"; // Keep for now, we'll remove gradually
 
-// Layout component
+// Layout component - Updated
 const Layout = ({ children }) => {
   return (
     <div className="App">
       <Navigation />
-      {children}
+      <div style={{ marginTop: "64px" }}>
+        {" "}
+        {/* Space for fixed AppBar */}
+        {children}
+      </div>
       <Footer />
     </div>
   );
 };
 
-// Landing page component
+// Landing page component - Keep as is for now
 const LandingPage = () => {
   return (
     <>
@@ -35,49 +44,61 @@ const LandingPage = () => {
   );
 };
 
-function App() {
+function AppContent() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+
   const handleAuthSuccess = () => {
     console.log("✅ Auth success!");
     setIsAuthenticated(true);
   };
 
   return (
-    <Router basename="/">
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <Layout>
-              <LandingPage />
-            </Layout>
-          }
-        />
-        <Route
-          path="/usaha-ekonomi-mesjid"
-          element={
-            <Layout>
-              <UsahaEkonomiMesjid isAuthenticated={isAuthenticated} />
-            </Layout>
-          }
-        />
-        <Route
-          path="/login"
-          element={
-            <Layout>
-              <Login onLoginSuccess={handleAuthSuccess} />
-            </Layout>
-          }
-        />
-      </Routes>
-    </Router>
+    <ThemeProvider theme={theme}>
+      <CssBaseline /> {/* Reset CSS to match MUI */}
+      <Router basename="/">
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Layout>
+                <LandingPage />
+              </Layout>
+            }
+          />
+          <Route
+            path="/usaha-ekonomi-mesjid"
+            element={
+              <Layout>
+                <UsahaEkonomiMesjid isAuthenticated={isAuthenticated} />
+              </Layout>
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <Layout>
+                <Login onLoginSuccess={handleAuthSuccess} />
+              </Layout>
+            }
+          />
+        </Routes>
+      </Router>
+    </ThemeProvider>
+  );
+}
+
+function App() {
+  return (
+    <JotaiProvider>
+      <AppContent />
+    </JotaiProvider>
   );
 }
 
 export default App;
 
-// import React from "react";
-// import "./App.css";
+// import { useState } from "react";
+// import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 // import Navigation from "./page/landing/Navigation";
 // import Hero from "./page/landing/Hero";
 // import About from "./page/landing/About";
@@ -85,27 +106,70 @@ export default App;
 // import Events from "./page/landing/Events";
 // import Contact from "./page/landing/Contact";
 // import Footer from "./page/landing/Footer";
+// import UsahaEkonomiMesjid from "./page/projects/uem/UsahaEkonomiMesjid";
+// import Login from "./components/Login";
+// import "./App.css";
 
-// function App() {
+// // Layout component
+// const Layout = ({ children }) => {
 //   return (
 //     <div className="App">
-//       {/* Navigation */}
 //       <Navigation />
-//       {/* Hero Section */}
-//       <Hero />
-//       {/* About Section */}
-//       <About />
-//       {/* Projects Section */}
-//       <Projects />
-//       {/* Events Section */}
-//       <Events />
-
-//       {/* Contact Section */}
-//       <Contact />
-
-//       {/* Footer */}
+//       {children}
 //       <Footer />
 //     </div>
+//   );
+// };
+
+// // Landing page component
+// const LandingPage = () => {
+//   return (
+//     <>
+//       <Hero />
+//       <About />
+//       <Projects />
+//       <Events />
+//       <Contact />
+//     </>
+//   );
+// };
+
+// function App() {
+//   const [isAuthenticated, setIsAuthenticated] = useState(false);
+//   const handleAuthSuccess = () => {
+//     console.log("✅ Auth success!");
+//     setIsAuthenticated(true);
+//   };
+
+//   return (
+//     <Router basename="/">
+//       <Routes>
+//         <Route
+//           path="/"
+//           element={
+//             <Layout>
+//               <LandingPage />
+//             </Layout>
+//           }
+//         />
+//         <Route
+//           path="/usaha-ekonomi-mesjid"
+//           element={
+//             <Layout>
+//               <UsahaEkonomiMesjid isAuthenticated={isAuthenticated} />
+//             </Layout>
+//           }
+//         />
+//         <Route
+//           path="/login"
+//           element={
+//             <Layout>
+//               <Login onLoginSuccess={handleAuthSuccess} />
+//             </Layout>
+//           }
+//         />
+//       </Routes>
+//     </Router>
 //   );
 // }
 

@@ -1,25 +1,67 @@
-import { Link } from "react-router-dom";
+// import * as React from 'react';
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Button,
+  Box,
+  IconButton,
+} from "@mui/material";
+import MenuIcon from "@mui/icons-material/Menu";
 
-function Navigation() {
+const Navigation = () => {
   return (
-    <nav className="navbar">
-      <div className="container">
-        <Link to="/" className="logo">
-          Ippeba<span>Connect</span>
-        </Link>
-        {/* <a href="#home" className="logo">
-          Ippeba<span>Connect</span>
-        </a> */}
-        <div className="nav-links">
-          <a href="#about">About</a>
-          <a href="#projects">Projects</a>
-          <a href="#events">Events</a>
-          <a href="#contact">Contact</a>
-          <button className="btn-primary">Join Us</button>
-        </div>
-      </div>
-    </nav>
+    <AppBar
+      position="fixed"
+      sx={{
+        backgroundColor: "white",
+        color: "#333",
+        boxShadow: "0 2px 10px rgba(0, 0, 0, 0.1)",
+      }}
+    >
+      <Toolbar>
+        <Typography
+          variant="h6"
+          component="div"
+          sx={{
+            flexGrow: 1,
+            fontWeight: 700,
+            color: "#333",
+          }}
+        >
+          IPPEBA <span style={{ color: "#af4c4c" }}>.</span>
+        </Typography>
+
+        <Box sx={{ display: { xs: "none", md: "flex" }, gap: 2 }}>
+          <Button color="inherit" href="/">
+            Home
+          </Button>
+          <Button color="inherit" href="/#about">
+            About
+          </Button>
+          <Button color="inherit" href="/#projects">
+            Projects
+          </Button>
+          {/* <Button color="inherit" href="/usaha-ekonomi-mesjid">
+            UEM
+          </Button> */}
+          <Button color="inherit" href="/login">
+            Login
+          </Button>
+        </Box>
+
+        <IconButton
+          size="large"
+          edge="start"
+          color="inherit"
+          aria-label="menu"
+          sx={{ display: { xs: "flex", md: "none" } }}
+        >
+          <MenuIcon />
+        </IconButton>
+      </Toolbar>
+    </AppBar>
   );
-}
+};
 
 export default Navigation;
