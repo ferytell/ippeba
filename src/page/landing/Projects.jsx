@@ -20,7 +20,7 @@ function Projects() {
         <div className="project-cards">
           <div className="project-card">
             <img
-              src="https://minio-api.ferytell.site/public-buck/clean_water.png"
+              src="https://minio-api.ferytell.online/public-buck/clean_water.png"
               alt="Clean Water Project"
             />
             <div className="project-info">
@@ -38,7 +38,7 @@ function Projects() {
           </div>
           <div className="project-card">
             <img
-              src="https://minio-api.ferytell.site/public-buck/nice.jpg"
+              src="https://minio-api.ferytell.online/public-buck/nice.jpg"
               alt="17 an"
             />
             <div className="project-info">
@@ -53,7 +53,7 @@ function Projects() {
           </div>
           <div className="project-card">
             <img
-              src="https://minio-api.ferytell.site/public-buck/education.png"
+              src="https://minio-api.ferytell.online/public-buck/education.png"
               alt="UEM"
             />
             <div className="project-info">
