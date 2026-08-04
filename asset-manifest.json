@@ -1,0 +1,16 @@
+{
+  "files": {
+    "main.css": "./static/css/main.bc5eb955.css",
+    "main.js": "./static/js/main.bf02c96b.js",
+    "static/js/453.9545a27a.chunk.js": "./static/js/453.9545a27a.chunk.js",
+    "static/media/IPPEBA.png": "./static/media/IPPEBA.70937dd6a3a7ccbacacc.png",
+    "index.html": "./index.html",
+    "main.bc5eb955.css.map": "./static/css/main.bc5eb955.css.map",
+    "main.bf02c96b.js.map": "./static/js/main.bf02c96b.js.map",
+    "453.9545a27a.chunk.js.map": "./static/js/453.9545a27a.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.bc5eb955.css",
+    "static/js/main.bf02c96b.js"
+  ]
+}
